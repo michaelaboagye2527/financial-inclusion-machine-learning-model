@@ -1,0 +1,11 @@
+More Tips
+
+    xThorough EDA and domain knowledge sourcing
+
+    xRe-group Categorical features
+
+    More Feature Engineering
+
+    Dataset balancing - oversampling, undersampling, SMOTE...
+    Ensembling of models
+    Cross-validation: Group folds, Stratified...
