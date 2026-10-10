@@ -1,3 +1,0 @@
-The evaluation metric for this challenge will be the percentage of survey respondents for whom you predict the binary 'bank account' classification incorrectly.
-
-This means the lower the incorrect percentage we get, the better the model performance.
