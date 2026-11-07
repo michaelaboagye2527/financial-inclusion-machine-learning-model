@@ -188,16 +188,14 @@ if submitted:
         if prediction == 1:
 
             st.success(
-                "The model predicts that this individual "
-                "has a bank account."
+                "Individual has a bank account."
             )
 
         else:
 
             st.warning(
-                "The model predicts that this individual "
-                "does not have a bank account."
-            )
+                "Individual does not have a bank account."
+                            )
 
         st.metric(
             label="Predicted Class",
