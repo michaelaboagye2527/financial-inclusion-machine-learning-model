@@ -173,31 +173,54 @@ A suggested repository layout is shown below. Adjust it to match your
 implementation.
 
 ``` text
-bank-account-ownership-prediction/
-├── app/
-│   ├── api.py                 # API entry point
-│   └── web_app.py             # Web interface
-├── data/
-│   ├── raw/                   # Original data (do not commit sensitive data)
-│   └── processed/             # Prepared data (often excluded from Git)
-├── notebooks/
-│   └── exploratory_analysis.ipynb
-├── src/
-│   ├── data_preprocessing.py
-│   ├── train.py
-│   └── predict.py
-├── models/  # Saved pipeline/model (may be stored externally)
-├── tests/
-│   ├── test_preprocessing.py
-│   ├── test_model.py
-│   └── test_api.py
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml
-├── Dockerfile
-├── requirements.txt
+project_financial_inclusion/
+│
+├── api/
+│   ├── __pycache__/
+│   ├── backend/
+|
+│── data/
+│
+├── frontend/
+│   ├── images/
+│   └── app.py
+│
+├── image/
+│
+├── models/
+│
+├── scripts/
+│
+├── training/
+│   ├── __pycache__/
+│   ├── .ipynb_checkpoints/
+│   ├── custom_model.py
+│   └── financial-inclusion-machine-learning.ipynb
+│
 ├── .gitignore
+│
 └── README.md
+```
+
+```
+api/	Contains the backend API implementation using FastAPI.
+
+data/	Stores data required by the API, if applicable.
+
+frontend/	Contains the Streamlit frontend application.
+
+frontend/images/	Stores images and visual assets used by the frontend.
+
+image/	Contains additional project images or visual resources.
+
+models/	Stores trained and serialized machine learning models.
+
+scripts/	Contains utility scripts for project execution and automation.
+
+training/	Contains model development, experimentation and training code.
+
+.gitignore	Specifies files and directories excluded from Git version control.
+
 ```
 
 ## Getting Started
@@ -207,38 +230,26 @@ bank-account-ownership-prediction/
 Replace the placeholder URL with the actual repository URL.
 
 ``` bash
-git clone <YOUR_REPOSITORY_URL>
-cd bank-account-ownership-prediction
+git clone https://github.com/michaelaboagye2527/financial-inclusion-machine-learning-model.git
+
+cd financial-inclusion-machine-learning-model
 ```
 
-### 2. Create and activate a virtual environment
 
-``` bash
-python -m venv .venv
-```
+### 2. Install Dependencies
 
-On Windows:
+This project uses uv for Python dependency management.
 
-``` bash
-.venv\Scripts\activate
-```
+If uv is not installed, install it first:
 
-On macOS or Linux:
+`pip install uv`
 
-``` bash
-source .venv/bin/activate
-```
+Install the project dependencies using:
 
-### 3. Install dependencies
+`uv sync`
 
-If a `requirements.txt` file is available:
+This command automatically creates a virtual environment (if one doesn't exist) and installs the dependencies specified in `pyproject.toml and uv.lock.`
 
-``` bash
-pip install -r requirements.txt
-```
-
-Otherwise, install the project's selected dependencies and pin tested
-versions in `requirements.txt` before deployment.
 
 ### 4. Add the dataset
 
@@ -247,14 +258,7 @@ project to read it from an approved storage location. Do not commit
 private or restricted data to source control. Update the training
 configuration to point to the correct file and target column.
 
-### 5. Train and evaluate the model
 
-Once the training script is implemented, run the command defined by the
-project. For example:
-
-``` bash
-python -m src.train
-```
 
 This is a suggested command; it will work only after the corresponding
 module and configuration have been created.

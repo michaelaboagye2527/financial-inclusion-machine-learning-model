@@ -3,16 +3,12 @@ import requests
 
 st.set_page_config(
     page_title="Financial Inclusion Predictor",
-    layout="wide"
-)
-st.image(
-    "frontend/images/banner1.png",
-    use_container_width=True
-)
+    layout="wide")
+
 API_URL = "http://localhost:8000/predict"
 
 # Page title
-#st.title("Financial Inclusion Prediction")
+st.title("Financial Inclusion Prediction")
 st.subheader("Bank Account Ownership Prediction")
 
 st.write(
@@ -20,7 +16,7 @@ st.write(
     "whether the individual is likely to have a bank account."
 )
 
-st.divider()
+#st.divider()
 
 # Categorical options
 COUNTRIES = ["Rwanda", "Tanzania", "Kenya", "Uganda"]
@@ -182,9 +178,18 @@ if submitted:
 
         prediction = result["prediction"]
 
+        # Extract prediction probabilities
+        probabilities = result["probabilities"]
+
+        account_probability = probabilities["has_bank_account"]
+        no_account_probability = probabilities["no_bank_account"]
+
+        threshold = result["classification_threshold"]
+
         st.divider()
         st.subheader("Prediction Result")
 
+        # Display prediction
         if prediction == 1:
 
             st.success(
@@ -195,11 +200,51 @@ if submitted:
 
             st.warning(
                 "Individual does not have a bank account."
-                            )
+            )
 
-        st.metric(
-            label="Predicted Class",
-            value=prediction
+        # Display prediction metrics
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                label="Predicted Class",
+                value=prediction
+            )
+
+        with col2:
+
+            st.metric(
+                label="Classification Threshold",
+                value=f"{threshold * 100:.0f}%"
+            )
+
+        # Display probabilities
+        st.subheader("Prediction Probabilities")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                label="Has Bank Account",
+                value=f"{account_probability * 100:.2f}%"
+            )
+
+        with col2:
+
+            st.metric(
+                label="No Bank Account",
+                value=f"{no_account_probability * 100:.2f}%"
+            )
+
+        # Visualize probability distribution
+        st.write("Probability Distribution")
+
+        st.progress(account_probability)
+
+        st.caption(
+            "Probability of having a bank account"
         )
 
     except requests.exceptions.ConnectionError:
@@ -219,6 +264,6 @@ if submitted:
 
         st.error(f"Request failed: {e}")
 
-    except (KeyError, ValueError) as e:
+    except (KeyError, ValueError, TypeError) as e:
 
         st.error(f"Invalid API response: {e}")
